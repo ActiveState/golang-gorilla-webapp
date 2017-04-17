@@ -3,11 +3,12 @@ HTTP support, and the language's support for asynchronous execution lends
 itself well to high performance web applications.
 
 While you could start a webapp from scratch with the
-core [`net/http`](https://golang.org/pkg/net/http/) package, you can save
-yourself some time and pain by using one of the many webapp toolkits available
-for Go. This article will covers a simple webapp using
+core [`net/http`](http://docs.activestate.com/activego/1.8/pkg/http.1.html)
+package, you can save yourself some time and pain by using one of the many
+webapp toolkits available for Go. This article will covers a simple webapp
+using
 the
-[Gorilla web toolkit's](http://www.gorillatoolkit.org/) [`mux`](http://www.gorillatoolkit.org/pkg/mux) package,
+[Gorilla web toolkit's](http://www.gorillatoolkit.org/) [`mux`](http://docs.activestate.com/activego/1.8/pkg/github.com/gorilla/mux/index.html) package,
 with [Postgres](https://www.postgresql.org/) as the backend database. To talk
 to Postgres from Go, we'll
 use
@@ -142,24 +143,31 @@ func userIsAuthorized(r *http.Request) bool {
 }
 ```
 
-We call [`r.Header.Get()`](https://golang.org/pkg/net/http/#Header.Get) to get
-the value of the header. If it's not set, or the header exists but is empty,
-this value will be an empty string. If that's the case we can skip the
+We
+call
+[`r.Header.Get()`](http://docs.activestate.com/activego/1.8/pkg/http.1.html#Header.Get) to
+get the value of the header. If it's not set, or the header exists but is
+empty, this value will be an empty string. If that's the case we can skip the
 database lookup.
 
 For the database lookup, we
-call [`db.QueryRow`](https://golang.org/pkg/database/sql/#DB.QueryRow). This
+call
+[`db.QueryRow`](http://docs.activestate.com/activego/1.8/pkg/database/sql.1.html#DB.QueryRow). This
 method is used to execute a query that is expected to return exactly zero or
 one row. We then
-call [`Scan()`](https://golang.org/pkg/database/sql/#Row.Scan) on the
-returned [`*db.Row`](https://golang.org/pkg/database/sql/#Row) to get the
-actual value. If no rows were found, the `Scan()` method will return
-a [`sql.ErrNoRows`](https://golang.org/pkg/database/sql/#pkg-variables)
-error. If any other sort of error is returned that indicates a more serious
-problem. If this were a real production application, we'd want a robust
-logging system, but for now we just use
-the [`log`](https://golang.org/pkg/log/) package to spit out an error
-message.
+call
+[`Scan()`](http://docs.activestate.com/activego/1.8/pkg/database/sql.1.html#Row.Scan) on
+the
+returned
+[`*db.Row`](http://docs.activestate.com/activego/1.8/pkg/database/sql.1.html#Row) to
+get the actual value. If no rows were found, the `Scan()` method will return
+a
+[`sql.ErrNoRows`](http://docs.activestate.com/activego/1.8/pkg/database/sql.1.html#pkg-variables) error. If
+any other sort of error is returned that indicates a more serious problem. If
+this were a real production application, we'd want a robust logging system,
+but for now we just use
+the [`log`](http://docs.activestate.com/activego/1.8/pkg/log/index.html)
+package to spit out an error message.
 
 Here's what our `UserHandler` itself looks like:
 
@@ -192,19 +200,22 @@ JSON document as the response. Since all of our handlers can return a JSON
 document, we've abstracted that into its own function.
 
 The pattern for sending a response with
-the [`http.ResponseWriter`](https://golang.org/pkg/net/http/#ResponseWriter)
-interface always follows the same pattern:
+the
+[`http.ResponseWriter`](http://docs.activestate.com/activego/1.8/pkg/http.1.html#ResponseWriter) interface
+always follows the same pattern:
 
 1. Set the response header.
 2. Call
-   [`WriteHeader(status)`](https://golang.org/pkg/net/http/#ResponseWriter)
-   passing the HTTP status for the response.
+   [`WriteHeader(status)`](http://docs.activestate.com/activego/1.8/pkg/http.1.html#ResponseWriter) passing
+   the HTTP status for the response.
 3. Write the response body
-   using [`Write()`](https://golang.org/pkg/net/http/#ResponseWriter) if there
-   is a response body. Note that the `Write()` method takes an argument of the
-   type `[]byte`, not a `string`. You can
-   use [`io.WriteString()`](https://golang.org/pkg/io/#WriteString) if you
-   have a string to send.
+   using
+   [`Write()`](http://docs.activestate.com/activego/1.8/pkg/http.1.html#ResponseWriter) if
+   there is a response body. Note that the `Write()` method takes an argument
+   of the type `[]byte`, not a `string`. You can
+   use
+   [`io.WriteString()`](http://docs.activestate.com/activego/1.8/pkg/io/index.html#WriteString) if
+   you have a string to send.
 
 Here's what `sendJSONResponse` looks like:
 
@@ -230,9 +241,11 @@ func sendJSONResponse(w http.ResponseWriter, data interface{}) {
 First we try to encode our response as JSON using `json.Marshal()`. If
 encoding fails for some reason, we log an error and return a 500.
 
-We then call [`w.Header().Set()`](https://golang.org/pkg/net/http/#Header.Set)
-to set the `Content-Type` header in the response. Finally, we call `w.Write()`
-to write the response body. Since the `json.Marshal()` method function returns
+We then
+call
+[`w.Header().Set()`](http://docs.activestate.com/activego/1.8/pkg/http.1.html#Header.Set) to
+set the `Content-Type` header in the response. Finally, we call `w.Write()` to
+write the response body. Since the `json.Marshal()` method function returns
 bytes, not a string, we don't need to use `io.WriteString`. If the call to
 `Write()` fails, we log an error, but it's too late to change the HTTP status.
 
@@ -275,16 +288,20 @@ func textHandler(w http.ResponseWriter, r *http.Request) {
 ```
 
 We first
-call [`io.ReadAll(r.Body)`](https://golang.org/pkg/io/ioutil/#ReadAll) to get
-the request body's
-content. The [`http.Request`](https://golang.org/pkg/net/http/#Request) type's
+call
+[`io.ReadAll(r.Body)`](http://docs.activestate.com/activego/1.8/pkg/io/ioutil/index.html#ReadAll) to
+get the request body's
+content. The
+[`http.Request`](http://docs.activestate.com/activego/1.8/pkg/http.1.html#Request) type's
 `Body` field implements
-the [`io.ReadCloser`](https://golang.org/pkg/io/#ReadCloser) interface, which
-means that the `ReadAll` function can read from it directly. We then use
-the [`json.Unmarshal`](https://golang.org/pkg/encoding/json/#Unmarshal)
-function to convert the request body's JSON content into a struct. If this
-fails, we send an error message with a 400 (Bad Request) status. The error
-message itself is just plain text.
+the
+[`io.ReadCloser`](http://docs.activestate.com/activego/1.8/pkg/io/index.html#ReadCloser) interface,
+which means that the `ReadAll` function can read from it directly. We then use
+the
+[`json.Unmarshal`](http://docs.activestate.com/activego/1.8/pkg/json.html#Unmarshal) function
+to convert the request body's JSON content into a struct. If this fails, we
+send an error message with a 400 (Bad Request) status. The error message
+itself is just plain text.
 
 The `textHashHandler` function looks at the path for a variable:
 
@@ -319,7 +336,8 @@ This tells `mux` that any path matching `/text/...` matches this handler, and
 that the portion after `/text/` is a variable named `hash`. Note that this
 only matches one level of path, so a path like `/text/.../more/stuff` would
 not match<sup>[2](#fn-2)</sup>. We can look up the matched variables by
-calling [`mux.Vars(r)`](http://www.gorillatoolkit.org/pkg/mux#Vars). This
+calling
+[`mux.Vars(r)`](http://docs.activestate.com/activego/1.8/pkg/github.com/gorilla/mux/index.html#Vars). This
 returns a `map[string]string` with all the matched variables. We look up the
 `hash` key in this map and attempt to look that hash up in the database. If
 the hash exists we return the text in a JSON document, otherwise we return a
