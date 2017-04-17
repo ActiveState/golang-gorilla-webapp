@@ -5,9 +5,16 @@ itself well to high performance web applications.
 While you could start a webapp from scratch with the
 core [`net/http`](https://golang.org/pkg/net/http/) package, you can save
 yourself some time and pain by using one of the many webapp toolkits available
-for Go. This article will show you how to write a simple webapp using
+for Go. This article will covers a simple webapp using
 the
-[Gorilla web toolkit's](http://www.gorillatoolkit.org/) [`mux`](http://www.gorillatoolkit.org/pkg/mux) package.
+[Gorilla web toolkit's](http://www.gorillatoolkit.org/) [`mux`](http://www.gorillatoolkit.org/pkg/mux) package,
+with [Postgres](https://www.postgresql.org/) as the backend database. To talk
+to Postgres from Go, we'll
+use
+[`lib/pq`](http://docs.activestate.com/activego/1.8/pkg/github.com/lib/pq/index.html) with
+the
+[`database/sql`](http://docs.activestate.com/activego/1.8/pkg/database/sql.1.html) core
+package.
 
 All of the packages used in the example application are shipped with
 our [ActiveGo beta](http://www.activestate.com/activego/downloads), so you can
