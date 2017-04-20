@@ -22,7 +22,7 @@ our [ActiveGo beta](http://www.activestate.com/activego/downloads), so you can
 download ActiveGo and run this application on your own system.
 
 This article assumes you already have a basic understanding of the Go language
-and tools, so I'll focus on the design of the webapp and the use of mux and
+and tools, so I'll focus on the design of the webapp and the use of `mux` and
 other libraries.
 
 I'm going to build a simple webapp with a REST API that takes a chunk of text
