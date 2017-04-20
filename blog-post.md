@@ -5,7 +5,7 @@ itself well to high performance web applications.
 While you could start a webapp from scratch with the
 core [`net/http`](http://docs.activestate.com/activego/1.8/pkg/http.1.html)
 package, you can save yourself some time and pain by using one of the many
-webapp toolkits available for Go. This article will covers a simple webapp
+webapp toolkits available for Go. This article will cover a simple webapp
 using
 the
 [Gorilla web toolkit's](http://www.gorillatoolkit.org/) [`mux`](http://docs.activestate.com/activego/1.8/pkg/github.com/gorilla/mux/index.html) package,
